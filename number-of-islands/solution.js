@@ -22,10 +22,16 @@ const data4 = [
   ["0", "0", "1", "0", "0"],
   ["0", "0", "0", "1", "1"],
 ];
-
-function getId(row, col) {
-  return `${row}-${col}`;
-}
+const data5 = [
+  ["1", "1", "1"],
+  ["0", "1", "0"],
+  ["1", "1", "1"],
+];
+const data6 = [
+  ["1", "0", "1", "1", "1"],
+  ["1", "0", "1", "0", "1"],
+  ["1", "1", "1", "0", "1"],
+];
 
 function getEl(grid, row, col) {
   if (grid[row] === undefined || grid[row][col] === undefined) {
@@ -35,30 +41,19 @@ function getEl(grid, row, col) {
   return grid[row][col];
 }
 
-function findAdjacent(row, col) {
-  const right = [row, col + 1];
-  const left = [row, col - 1];
-  const top = [row - 1, col];
-  const bottom = [row + 1, col];
-
-  return [right, bottom, left, top];
-}
-
-function traverse(row, col, grid, visited) {
-  const id = getId(row, col);
+function traverse(row, col, grid) {
   const el = getEl(grid, row, col);
 
-  if (visited.has(id) || el == 0) {
+  if (el == 0) {
     return;
   }
 
-  visited.add(id);
+  grid[row][col] = 0;
 
-  const adj = findAdjacent(row, col);
-
-  for (let [nr, nc] of adj) {
-    traverse(nr, nc, grid, visited);
-  }
+  traverse(row, col + 1, grid);
+  traverse(row, col - 1, grid);
+  traverse(row + 1, col, grid);
+  traverse(row - 1, col, grid);
 }
 
 /**
@@ -66,16 +61,14 @@ function traverse(row, col, grid, visited) {
  * @return {number}
  */
 function numIslands(grid) {
-  const visited = new Set();
   let count = 0;
 
   for (let row = 0; row < grid.length; row++) {
     for (let col = 0; col < grid[row].length; col++) {
-      const id = getId(row, col);
       const el = getEl(grid, row, col);
 
-      if (el != 0 && !visited.has(id)) {
-        traverse(row, col, grid, visited);
+      if (el != 0) {
+        traverse(row, col, grid);
         count++;
       }
     }
@@ -84,4 +77,4 @@ function numIslands(grid) {
   return count;
 }
 
-numIslands(data4); //?
+numIslands(data6); //?

@@ -24,54 +24,49 @@ const data4 = [
  * @return {number}
  */
 function orangesRotting(grid) {
-  let count = 0;
+  let no = 2;
   let didChange = false;
-  let hasFresh = false;
 
   do {
     didChange = false;
-    hasFresh = false;
+
     for (let row = 0; row < grid.length; row++) {
       for (let col = 0; col < grid[row].length; col++) {
-        const el = grid[row][col];
-
-        if (el == 2) {
+        if (grid[row][col] == no) {
           if (col - 1 >= 0 && grid[row][col - 1] == 1) {
-            grid[row][col - 1] = 3;
+            grid[row][col - 1] = no + 1;
+            didChange = true;
           }
           if (col + 1 < grid[row].length && grid[row][col + 1] == 1) {
-            grid[row][col + 1] = 3;
+            grid[row][col + 1] = no + 1;
+            didChange = true;
           }
           if (row - 1 >= 0 && grid[row - 1][col] == 1) {
-            grid[row - 1][col] = 3;
+            grid[row - 1][col] = no + 1;
+            didChange = true;
           }
           if (row + 1 < grid.length && grid[row + 1][col] == 1) {
-            grid[row + 1][col] = 3;
+            grid[row + 1][col] = no + 1;
+            didChange = true;
           }
-        }
-      }
-    }
-
-    for (let row = 0; row < grid.length; row++) {
-      for (let col = 0; col < grid[row].length; col++) {
-        const el = grid[row][col];
-
-        if (el == 3) {
-          grid[row][col] = 2;
-          didChange = true;
-        }
-        if (el == 1) {
-          hasFresh = true;
         }
       }
     }
 
     if (didChange) {
-      count += 1;
+      no += 1;
     }
   } while (didChange);
 
-  return hasFresh ? -1 : count;
+  for (let row = 0; row < grid.length; row++) {
+    for (let col = 0; col < grid[row].length; col++) {
+      if (grid[row][col] == 1) {
+        return -1;
+      }
+    }
+  }
+
+  return no - 2;
 }
 
-orangesRotting(data4); //?
+orangesRotting(data1); //?

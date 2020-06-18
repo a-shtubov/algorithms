@@ -1,4 +1,4 @@
-function binarySearch(arr, val) {
+export function binarySearch(arr, val) {
   let l = 0;
   let r = arr.length - 1;
   let res = -1;

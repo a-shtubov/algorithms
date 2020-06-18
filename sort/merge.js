@@ -1,5 +1,43 @@
 import { generateArrayNumber } from "../utils/array";
 
+function mergeAlt(arr, l, m, r) {
+  const tmp = [...arr];
+
+  let i = l;
+  let j = m + 1;
+  let idx = l;
+
+  while (i <= m && j <= r) {
+    const lel = arr[i];
+    const rel = arr[j];
+
+    if (rel > lel) {
+      tmp[idx] = arr[i];
+      i++;
+    } else {
+      tmp[idx] = arr[j];
+      j++;
+    }
+
+    idx++;
+  }
+
+  let x = i <= m ? i : j;
+  let lim = i <= m ? m : r;
+
+  while (x <= m) {
+    tmp[idx] = arr[x];
+    x++;
+    idx++;
+  }
+
+  for (let k = l; k <= r; k++) {
+    arr[k] = tmp[k];
+  }
+
+  return arr;
+}
+
 function merge(arr, l, m, r) {
   const tmp = [...arr];
 

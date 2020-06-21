@@ -20,7 +20,7 @@ export function binarySearch(arr, val) {
   return res;
 }
 
-export function findBinaryClosest(arr, val, predict) {
+export function findBinaryClosest(arr, val, predicate) {
   if (val < arr[0]) {
     return 0;
   }
@@ -52,5 +52,5 @@ export function findBinaryClosest(arr, val, predict) {
     return res;
   }
 
-  return predict(arr[l], arr[r]) <= 0 ? l : r;
+  return predicate(arr[l], arr[r]) <= 0 ? l : r;
 }

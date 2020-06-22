@@ -58,3 +58,26 @@ function lengthOfLongestSubstringSlidingWindow(s) {
 
   return res;
 }
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+function lengthOfLongestSubstring(s) {
+  let res = 0;
+  let i = 0;
+  let j = 0;
+  let cache = new Map();
+
+  while (j < s.length && s.length - i > res) {
+    if (cache.has(s[j])) {
+      i = Math.max(cache.get(s[j]), i);
+    }
+
+    res = Math.max(res, j - i + 1);
+    cache.set(s[j], j + 1);
+    j++;
+  }
+
+  return res;
+}

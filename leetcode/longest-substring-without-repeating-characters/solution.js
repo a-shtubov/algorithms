@@ -2,7 +2,7 @@
  * @param {string} s
  * @return {number}
  */
-function lengthOfLongestSubstring(s) {
+function lengthOfLongestSubstringNaive(s) {
   let res = 0;
   let cache = new Set();
 
@@ -26,6 +26,33 @@ function lengthOfLongestSubstring(s) {
       if (l > res) {
         res = l;
       }
+    }
+  }
+
+  return res;
+}
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+function lengthOfLongestSubstringSlidingWindow(s) {
+  let res = 0;
+  let l = 0;
+  let r = 0;
+  let cache = new Set();
+
+  while (s.length - l > res && l < s.length && r < s.length) {
+    if (cache.has(s[r])) {
+      cache.delete(s[l]);
+      l++;
+    } else {
+      if (r - l + 1 > res) {
+        res = r - l + 1;
+      }
+
+      cache.add(s[r]);
+      r++;
     }
   }
 

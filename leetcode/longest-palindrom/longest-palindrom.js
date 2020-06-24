@@ -44,3 +44,28 @@ function longestPalindromeBruteForce(s) {
 
   return s.slice(resL, resR + 1);
 }
+
+/**
+ * @param {string} s
+ * @param {number} i
+ * @param {number} j
+ * @return {string}
+ */
+function longestPalindromeDP(s, i = 0, j = s.length - 1) {
+  if (i == j) {
+    return s.slice(i, j + 1);
+  }
+
+  if (s[i] == s[j] && i + 1 == j) {
+    return s.slice(i, j + 1);
+  }
+
+  if (s[i] == s[j]) {
+    return s[i] + longestPalindromeDP(s, i + 1, j - 1) + s[j];
+  }
+
+  const fromLeft = longestPalindromeDP(s, i + 1, j);
+  const fromRight = longestPalindromeDP(s, i, j - 1);
+
+  return fromLeft.length > fromRight.length ? fromLeft : fromRight;
+}

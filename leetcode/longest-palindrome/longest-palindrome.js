@@ -69,3 +69,44 @@ function longestPalindromeDP(s, i = 0, j = s.length - 1) {
 
   return fromLeft.length > fromRight.length ? fromLeft : fromRight;
 }
+
+/**
+ * @param {string} s
+ * @param {number} i
+ * @param {number} j
+ * @return {number}
+ */
+function expandBreadth(s, i, j) {
+  while (i >= 0 && j < s.length && s[i] == s[j]) {
+    i--;
+    j++;
+  }
+
+  return j - i - 1;
+}
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+function longestPalindrome(s) {
+  let resL = 0;
+  let resR = 0;
+
+  for (let i = 0; i < s.length; i++) {
+    const l1 = expandBreadth(s, i, i);
+    const l2 = expandBreadth(s, i, i + 1);
+
+    if (l1 > resR - resL || l2 > resR - resL) {
+      if (l1 > l2) {
+        resL = i - (l1 - 1) / 2;
+        resR = i + (l1 - 1) / 2;
+      } else {
+        resL = i + 1 - l2 / 2;
+        resR = i + l2 / 2;
+      }
+    }
+  }
+
+  return s.slice(resL, resR + 1);
+}

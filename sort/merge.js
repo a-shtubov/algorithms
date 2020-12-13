@@ -79,7 +79,3 @@ function mergeSort(arr, left = 0, right = arr.length - 1) {
 
   return arr;
 }
-
-// const arr1 = generateArrayNumber(20); //?
-
-// mergeSort(arr1); //?

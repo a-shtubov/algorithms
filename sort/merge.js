@@ -79,3 +79,55 @@ function mergeSort(arr, left = 0, right = arr.length - 1) {
 
   return arr;
 }
+
+function mergeSortStack(arr) {
+  let stack = [];
+  let i = 0;
+
+  stack.push([0, arr.length - 1]);
+
+  while (i < stack.length) {
+    const [l, r] = stack[i];
+
+    if (r - l > 1) {
+      const mid = Math.floor((l + r) / 2);
+
+      stack.push([l, mid]);
+      stack.push([mid + 1, r]);
+    }
+
+    i++;
+  }
+
+  while (stack.length > 0) {
+    const [l, r] = stack.pop();
+
+    if (l === r) {
+      continue;
+    }
+
+    const mid = Math.floor((l + r) / 2);
+
+    let a = l;
+    let b = mid + 1;
+    let tmp = Array.from({ length: r - l + 1 });
+
+    for (let idx = 0; idx < tmp.length; idx++) {
+      const lel = a > mid ? Infinity : arr[a];
+      const rel = b > r ? Infinity : arr[b];
+      if (lel > rel) {
+        tmp[idx] = arr[b];
+        b++;
+      } else {
+        tmp[idx] = arr[a];
+        a++;
+      }
+    }
+
+    for (let idx = l; idx <= r; idx++) {
+      arr[idx] = tmp[idx - l];
+    }
+  }
+
+  return arr;
+}
